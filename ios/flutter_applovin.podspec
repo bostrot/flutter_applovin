@@ -15,7 +15,8 @@ A new Flutter applovin plugin.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  
+  s.dependency 'GoogleMobileAdsMediationAppLovin'
+
   s.ios.deployment_target = '8.0'
 end
 
