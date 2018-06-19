@@ -5,7 +5,10 @@ requests are welcome.
 
 ## iOS
 
-Add your AppLovinSDK key in custom ios target properties under the key AppLovinSdkKey.
+In Runner/Info.plist add
+    
+	<key>AppLovinSdkKey</key
+	<string>YOUR_KEY</string>
 
 ## Android
 
