@@ -19,45 +19,45 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  * FlutterApplovinPlugin
  */
 public class FlutterApplovinPlugin implements MethodCallHandler {
-  /**
-   * Plugin registration.
-   */
-  static private AppLovinAd loadedAd;
-  static Context _context;
-  public static void registerWith(final Registrar registrar) {
-    _context = registrar.context();
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_applovin");
-    channel.setMethodCallHandler(new FlutterApplovinPlugin());
-    AppLovinSdk.initializeSdk(registrar.context());
-  }
+    /**
+     * Plugin registration.
+     */
+    static private AppLovinAd loadedAd;
+    static Context _context;
 
-  @Override
-  public void onMethodCall(MethodCall call, Result result) {
-    if (call.method.equals("interstitial")) {
-      // Load an Interstitial Ad
-      AppLovinSdk.getInstance( _context ).getAdService().loadNextAd( AppLovinAdSize.INTERSTITIAL,
-              new
-                      AppLovinAdLoadListener()
-                      {
-                        @Override
-                        public void adReceived(AppLovinAd ad)
-                        {
-                          loadedAd = ad;
-                          AppLovinInterstitialAdDialog interstitialAd = AppLovinInterstitialAd.create( AppLovinSdk
-                                  .getInstance( _context ), _context );
-
-
-                          interstitialAd.showAndRender( loadedAd );
-                        }
-
-                        @Override
-                        public void failedToReceiveAd(int errorCode)
-                        {
-                          // Look at AppLovinErrorCodes.java for list of error codes.
-                        }
-                      } );
-    } else {
-      result.notImplemented();
+    public static void registerWith(final Registrar registrar) {
+        _context = registrar.context();
+        final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_applovin");
+        channel.setMethodCallHandler(new FlutterApplovinPlugin());
+        AppLovinSdk.initializeSdk(registrar.context());
     }
-  }
+
+    @Override
+    public void onMethodCall(MethodCall call, Result result) {
+        switch (call.method) {
+            case "loadInterstitial":
+                // Load an Interstitial Ad
+                AppLovinSdk.getInstance(_context).getAdService().loadNextAd(AppLovinAdSize.INTERSTITIAL,
+                        new AppLovinAdLoadListener() {
+                            @Override
+                            public void adReceived(AppLovinAd ad) {
+                                loadedAd = ad;
+                            }
+
+                            @Override
+                            public void failedToReceiveAd(int errorCode) {
+                                // Look at AppLovinErrorCodes.java for list of error codes.
+                            }
+                        });
+                break;
+            case "showInterstitial":
+                AppLovinInterstitialAdDialog interstitialAd = AppLovinInterstitialAd.create(AppLovinSdk
+                        .getInstance(_context), _context);
+                interstitialAd.showAndRender(loadedAd);
+                break;
+            default:
+                result.notImplemented();
+                break;
+        }
+    }
 }

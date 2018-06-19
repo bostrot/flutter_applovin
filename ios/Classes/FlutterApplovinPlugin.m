@@ -20,7 +20,6 @@
 {
     // We now have an interstitial ad we can show!
     self.ad = ad;
-    [[ALInterstitialAd shared] showOver: [UIApplication sharedApplication].keyWindow andRender: self.ad];
 }
 
 - (void)adService:(nonnull ALAdService *)adService didFailToLoadAdWithError:(int)code
@@ -38,12 +37,17 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-  if ([@"interstitial" isEqualToString:call.method]) {
-      [self loadInterstitialAd];
-    result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
-  } else {
-    result(FlutterMethodNotImplemented);
-  }
+    switch(call.method) {
+        case "loadInterstitial":
+            [self loadInterstitialAd];
+            break;
+        case "showInterstitial":
+            [[ALInterstitialAd shared] showOver: [UIApplication sharedApplication].keyWindow andRender: self.ad];
+            break;
+        default:
+            result(FlutterMethodNotImplemented);
+            break;
+    }
 }
 
 @end
