@@ -36,12 +36,7 @@
             </intent-filter>
         </activity>
         // this
-        <meta-data android:name="applovin.sdk.key"
-            android:value="UAJeAENL2fQfs3nrT_JNOb9ve3LOZJh3T_heD4_GlQxaThPxhiJ5JS-yVKK4e1770qmEvmUdAPCd6bZpJtucKt"  />
-        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity"
-            android:configChanges="orientation|screenSize"/>
+        <meta-data android:name="applovin.sdk.key" android:value="UAJeAENL2fQfs3nrT_JNOb9ve3LOZJh3T_heD4_GlQxaThPxhiJ5JS-yVKK4e1770qmEvmUdAPCd6bZpJtucKt" /> #gitignore
 
-        <activity android:name="com.applovin.adview.AppLovinConfirmationActivity"
-            android:configChanges="orientation|screenSize"/>
     </application>
 </manifest>
